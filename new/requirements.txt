@@ -1,9 +1,2 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jun 20 13:58:34 2019
-
-@author: Anthony Melson
-"""
-
 Flask==0.12.4
 Werkzeug<0.13.0,>=0.12.0
