@@ -127,60 +127,61 @@ def Shaved_Ice_Stand(Ice_Machines, Employee, Register, Set_Seed):
 
 Every Combination Up To Four, Where Registers =< Employees AND Ice_Machines =< Employees (29 Possible). Others
 Are Left Out because Equal or Greater Number of Personnel Are Needed To Use All of a Resource Type Simultaneously.
-
+This currently needs to be run after the previous function.
 """
-Decision_Set = [[1,1,1,i], [1,2,1,i], [1,3,1,i], [1,4,1,i],
-                [2,2,1,i], [2,3,1,i], [2,4,1,i], [3,3,1,i],
-                [3,4,1,i], [4,4,1,i], [1,2,2,i], [1,3,2,i],
-                [1,4,2,i], [1,3,3,i], [1,4,3,i], [1,4,4,i],
-                [2,2,2,i], [2,3,2,i], [2,4,2,i], [2,3,3,i],
-                [2,4,3,i], [2,4,4,i], [3,3,2,i], [3,4,2,i],
-                [3,3,3,i], [3,4,3,i], [3,4,4,i], [4,4,3,i],
-                [4,4,4,i]]
+def stand_opt(return Total_Revenue, Total_Served):
+    Decision_Set = [[1,1,1,i], [1,2,1,i], [1,3,1,i], [1,4,1,i],
+                    [2,2,1,i], [2,3,1,i], [2,4,1,i], [3,3,1,i],
+                    [3,4,1,i], [4,4,1,i], [1,2,2,i], [1,3,2,i],
+                    [1,4,2,i], [1,3,3,i], [1,4,3,i], [1,4,4,i],
+                    [2,2,2,i], [2,3,2,i], [2,4,2,i], [2,3,3,i],
+                    [2,4,3,i], [2,4,4,i], [3,3,2,i], [3,4,2,i],
+                    [3,3,3,i], [3,4,3,i], [3,4,4,i], [4,4,3,i],
+                    [4,4,4,i]]
 
-"""
+    """
 
-Simulate Each Solution Set N-Times, Record Average Revenues of Each, Calculate Costs of Settings, and Store in DF.
+    Simulate Each Solution Set N-Times, Record Average Revenues of Each, Calculate Costs of Settings, and Store in DF.
 
-"""
+    """
 
 
-n = 0
-Final_Results = []
-while n < len(Decision_Set):
+    n = 0
+    Final_Results = []
+    while n < len(Decision_Set):
 
-    i = 0
-    Revenue_Collected = []
-    Simulations_Per_Decision_Set = 3
+        i = 0
+        Revenue_Collected = []
+        Simulations_Per_Decision_Set = 3
 
-    while i < Simulations_Per_Decision_Set:
+        while i < Simulations_Per_Decision_Set:
 
-        Revenue, Total_Served = Shaved_Ice_Stand(Decision_Set[n][0], Decision_Set[n][1], Decision_Set[n][2],Decision_Set[n][3])
-        Revenue_Collected.append([Revenue])
-        i = i + 1
+            Revenue, Total_Served = Shaved_Ice_Stand(Decision_Set[n][0], Decision_Set[n][1], Decision_Set[n][2],Decision_Set[n][3])
+            Revenue_Collected.append([Revenue])
+            i = i + 1
 
-    Avg_Revenue = sum(Revenue_Collected)/Simulations_Per_Decision_Set
+        Avg_Revenue = sum(Revenue_Collected)/Simulations_Per_Decision_Set
 
-    Material_Cost = Total_Served * 0.25
-    Labor_Cost = Decision_Set[n][1] *8 * 20
-    Machine_Cost = Decision_Set[n][0] * 50
-    Register_Cost = Decision_Set[n][2] * 25
-    Total_Cost = Material_Cost + Labor_Cost + Machine_Cost + Register_Cost
+        Material_Cost = Total_Served * 0.25
+        Labor_Cost = Decision_Set[n][1] *8 * 20
+        Machine_Cost = Decision_Set[n][0] * 50
+        Register_Cost = Decision_Set[n][2] * 25
+        Total_Cost = Material_Cost + Labor_Cost + Machine_Cost + Register_Cost
 
-    Profit = Avg_Revenue - Total_Cost
+        Profit = Avg_Revenue - Total_Cost
 
-    Final_Results.append([Decision_Set[n], Labor_Cost, Machine_Cost, Register_Cost, Total_Cost, Avg_Revenue, Profit])
+        Final_Results.append([Decision_Set[n], Labor_Cost, Machine_Cost, Register_Cost, Total_Cost, Avg_Revenue, Profit])
 
-    n = n + 1
+        n = n + 1
 
-Results_Table = pd.DataFrame(Final_Results,
-                columns=['Decision_Set', 'Labor_Cost', 'Machine_Cost', 'Register_Cost', 'Total_Cost', 'Avg_Revenue', 'Profit'])
-"""
+    Results_Table = pd.DataFrame(Final_Results,
+                    columns=['Decision_Set', 'Labor_Cost', 'Machine_Cost', 'Register_Cost', 'Total_Cost', 'Avg_Revenue', 'Profit'])
+    """
 
-Find Optimal Solution Set
+    Find Optimal Solution Set
 
-"""
-Highest_Profit = Results_Table['Profit'].idxmax()
-Optimal_Solution_Set = Decision_Set[Highest_Profit]
+    """
+    Highest_Profit = Results_Table['Profit'].idxmax()
+    Optimal_Solution_Set = Decision_Set[Highest_Profit]
 
-print(Optimal_Solution_Set, '  ', max
+    print(Optimal_Solution_Set)
