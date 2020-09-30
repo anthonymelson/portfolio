@@ -3,7 +3,6 @@
 
 # # Connect to SQL Server Driver and Create Database
 
-# In[2]:
 
 
 import pyodbc 
@@ -18,7 +17,7 @@ cursor.execute('CREATE DATABASE testDB;')
 
 # # Connect to Database and Create First Table
 
-# In[3]:
+
 
 
 conn = pyodbc.connect('Driver={SQL Server};'
@@ -42,7 +41,7 @@ cursor.execute("""
 
 # # Insert First Row Into Table
 
-# In[4]:
+
 
 
 cursor.execute("""
@@ -55,7 +54,7 @@ cursor.execute("""
 
 # # Run First Query Against The Table
 
-# In[5]:
+
 
 
 cursor.execute('select * from testDB.dbo.Persons')
@@ -63,7 +62,6 @@ cursor.execute('select * from testDB.dbo.Persons')
 
 # # Print Results By Row
 
-# In[6]:
 
 
 for row in cursor:
@@ -72,7 +70,6 @@ for row in cursor:
 
 # # Insert Python List Into Table as Row
 
-# In[40]:
 
 
 SQLCommand = ("INSERT INTO Persons(PersonID, LastName, FirstName, Address, City) VALUES (?,?,?,?,?)")    
@@ -88,7 +85,7 @@ conn.commit()
 
 # # Print Table By Row One At A Time Append to List
 
-# In[8]:
+
 
 
 persons = []
@@ -116,7 +113,7 @@ np.array(persons)[2]
 
 # # Make Pandas DF and Print
 
-# In[11]:
+
 
 
 import pandas as pd
@@ -125,13 +122,11 @@ pd.DataFrame(np.array(persons), columns=['ID', 'LastName', 'FirstName', 'Address
 
 # # Delete Top 5 Rows in Table
 
-# In[14]:
 
 
 cursor.execute('delete top (2) from testDB.dbo.Persons')
 
 
-# In[15]:
 
 
 for row in cursor.execute('select * from testDB.dbo.Persons').fetchall():
@@ -142,7 +137,7 @@ for row in cursor.execute('select * from testDB.dbo.Persons').fetchall():
 
 # # Looped Entry Of Previously Pulled Values
 
-# In[50]:
+
 
 
 SQLCommand = r"INSERT INTO Persons(PersonID, LastName, FirstName, Address, City) VALUES (?,?,?,?,?)"
@@ -165,13 +160,12 @@ for row in cursor.execute('select * from testDB.dbo.Persons'):
     print(row)
 
 
-# In[49]:
 
 
 cursor.execute('delete top (30) from testDB.dbo.Persons')
 
 
-# In[ ]:
+
 
 
 
